@@ -6,7 +6,7 @@ function App() {
       <aside className="sidemenu">
         <h1>Side Menu</h1>
       </aside>
-      <section>
+      <section className="chatbox">
 
       </section>
     </div>
