@@ -33,6 +33,10 @@
   border: 1px solid white;
   border-radius: 5px;
   text-align: left;
+  transition: ease 0.25s all;
+}
+.side-menu-button:hover{
+  background-color: rgb(255,255,255,0.1);
 }
 
 .side-menu-button span{
