@@ -10,7 +10,7 @@ const ChatMessage = ({ message }) => {
       <div className="chat-message-center">
         <div className={`avatar ${message.user === "gpt" && "chatgpt"}`}>
           {/* {message.user === "gpt" ? <OpenAISVGLogo /> : <div>You</div>} */}
-          {message.user === "gpt" && <OpenAISVGLogo /> }
+          {message.user === "gpt" && <OpenAISVGLogo />}
         </div>
         <div className="message">
           {message.message}
@@ -37,9 +37,20 @@ function App() {
   async function handleSubmit(e) {
     e.preventDefault();
     // console.log('submit')
-    let chatLognew = [...chatLog, { user: "me", message: `${input}` }];
     setInput("");
-    setChatLog(chatLognew);
+    setChatLog([...chatLog, { user: "me", message: `${input}` }]);
+    // fetch response
+    const response = await fetch("https://express-demo-gamma.vercel.app/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message: chatLog.map((message) => message.message).join("")
+      }),
+    });
+    const data = await response.json();
+    setChatLog([...chatLog, { user: "gpt", message: `${data}` }])
 
   }
   return (
