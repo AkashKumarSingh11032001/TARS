@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/AkashKumarSingh11032001/tars/issues"
   },
-  "homepage": "https://github.com/AkashKumarSingh11032001/tars#readme"
+  "homepage": "https://github.com/AkashKumarSingh11032001/tars#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "openai": "^3.2.1"
+  }
 }
