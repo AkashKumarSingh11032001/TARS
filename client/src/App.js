@@ -71,7 +71,9 @@ function App() {
     });
     const data = await response.json();
     await setChatLog([...chatLogNew, { user: "gpt", message: `${data.message}` }])
-
+    var scrollToTheBottomChatLog =
+      document.getElementsByClassName("chat-log")[0];
+    scrollToTheBottomChatLog.scrollTop = scrollToTheBottomChatLog.scrollHeight;
   }
   return (
     <div className="App">
