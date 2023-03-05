@@ -26,9 +26,9 @@ app.use(cors())
 const port = 3080
 
 app.post('/', async (req, res) => {
-    const {message} = req.body
+    const {message, currentModel} = req.body
     const response = await openai.createCompletion({
-        model: "text-davinci-003",
+        model: `${currentModel}`,
         prompt: `${message}`,
         max_tokens: 100,
         temperature: 0.5,
