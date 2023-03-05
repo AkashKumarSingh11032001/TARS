@@ -34,23 +34,29 @@ function App() {
     }
   ]);
 
+  function clearChat(){
+    setChatLog([]);
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     // console.log('submit')
-    setInput("");
-    setChatLog([...chatLog, { user: "me", message: `${input}` }]);
+    let chatLogNew = [...chatLog, { user: "me", message: `${input}` }]
+    await setInput("");
+    await setChatLog(chatLogNew);
     // fetch response
+    const messages = chatLog.map((message) => message.message).join("\n")
     const response = await fetch("https://express-demo-gamma.vercel.app/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        message: chatLog.map((message) => message.message).join("")
+        message: messages
       }),
     });
     const data = await response.json();
-    setChatLog([...chatLog, { user: "gpt", message: `${data}` }])
+    await setChatLog([...chatLogNew, { user: "gpt", message: `${data.message}` }])
 
   }
   return (
@@ -58,7 +64,7 @@ function App() {
 
       {/* Menu bar */}
       <aside className="sidemenu">
-        <div className='side-menu-button'>
+        <div className='side-menu-button' onClick={clearChat}>
           <span>+</span>
           New Chat
         </div>
