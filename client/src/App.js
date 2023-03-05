@@ -1,7 +1,13 @@
 import './App.css';
 import './normal.css';
+// set state
+import {useState} from 'react';
 
 function App() {
+  async function handleSubmit(e){
+    e.preventDefault();
+    // console.log('submit')
+  }
   return (
     <div className="App">
       <aside className="sidemenu">
@@ -55,9 +61,12 @@ function App() {
         </div>
 
         <div className='chat-input-holder'>
-          <textarea className='chat-input-textarea' rows='1' >
+          <form onSubmit={handleSubmit}>
 
-          </textarea>
+          </form>
+          <input className='chat-input-textarea' rows='1' >
+
+          </input>
 
         </div>
 
