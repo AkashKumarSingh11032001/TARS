@@ -2,7 +2,8 @@ import './App.css';
 import './normal.css';
 import OpenAISVGLogo from './OpenAISVGLogo'
 // set state
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
 
 const ChatMessage = ({ message }) => {
   return (
@@ -22,7 +23,13 @@ const ChatMessage = ({ message }) => {
 
 function App() {
 
+  useEffect(()=>{
+    getEngines();
+  },[])
+
   const [input, setInput] = useState("");
+  const [models, setModels] = useState([]);
+  const [currentModel, setcurrentModel] = useState("ada");
   const [chatLog, setChatLog] = useState([
     {
       user: 'gpt',
@@ -33,6 +40,12 @@ function App() {
       message: "I want use ChatGpt today"
     }
   ]);
+
+  function getEngines(){
+    fetch("https://localhost:3080/models")
+    .then(res => res.json())
+    .then(data => setModels(data.models.data))
+  }
 
   function clearChat(){
     setChatLog([]);
@@ -52,7 +65,8 @@ function App() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        message: messages
+        message: messages,
+        currentModel
       }),
     });
     const data = await response.json();
@@ -67,6 +81,17 @@ function App() {
         <div className='side-menu-button' onClick={clearChat}>
           <span>+</span>
           New Chat
+        </div>
+        <div className='models'>
+            <select onChange={(e)=>{
+              setcurrentModel(e.target.value)
+            }}>
+              {models.map((model,index)=>{
+                <option key={model.id} value={model.id}>
+                  {model.id}
+                </option>
+              })}
+            </select>
         </div>
       </aside>
 
